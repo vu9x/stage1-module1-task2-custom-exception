@@ -1,5 +1,10 @@
 package com.epam.mjc;
 
+class StudentException extends IllegalArgumentException {
+  public StudentException(String msg){
+    super(msg);
+  }
+}
 
 public class StudentManager {
 
@@ -7,15 +12,25 @@ public class StudentManager {
 
   public Student find(long studentID) {
     return Student.getValueOf(studentID);
+
   }
 
   public static void main(String[] args) {
     StudentManager manager = new StudentManager();
 
     for (int i = 0; i < IDs.length; i++) {
-      Student student = manager.find(IDs[i]);
-      System.out.println("Student name " + student.getName());
-    }
+      try {
+        Student student = manager.find(IDs[i]);
 
+        if(student == null){
+          throw new StudentException(String.format("Could not find student with ID %s", IDs[i]));
+        } else {
+          System.out.println("Student name " + student.getName());
+        }
+      }
+      catch(StudentException ex) {
+        System.out.println(ex.getMessage());
+      }
+    }
   }
 }
