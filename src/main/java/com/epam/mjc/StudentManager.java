@@ -4,12 +4,12 @@ public class StudentManager {
 
   private static final long[] IDs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 
-  public Student find(long studentID) {
+  public Student find(long studentID){
       try {
           if(Student.getValueOf(studentID) == null){
-              throw new StudentException(String.format("Could not find student with ID %s", studentID));
+              throw new IllegalArgumentException(String.format("Could not find student with ID %s", studentID));
           }
-      } catch (StudentException ex){
+      } catch (IllegalArgumentException ex){
           System.out.println(ex.getMessage());
       }
       finally {
